@@ -20,17 +20,18 @@ const DamageDetails = ({ navigation, route }: DamageDetailsScreenProps) => {
   const isDrawing = useRef(false);
   const lastPoint = useRef({ x: 0, y: 0 });
 
-  // Ініціалізація Canvas
   useEffect(() => {
-    if (canvasRef.current) {
-      const ctx = canvasRef.current.getContext('2d');
-      canvasRef.current.width = 300;
-      canvasRef.current.height = 300;
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, 300, 300);
-    }
+    requestAnimationFrame(() => {
+      if (canvasRef.current) {
+        const ctx = canvasRef.current.getContext('2d');
+        canvasRef.current.width = 300;
+        canvasRef.current.height = 300;
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, 300, 300);
+      }
+    });
   }, []);
-
+  
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderGrant: (e) => {
@@ -46,7 +47,7 @@ const DamageDetails = ({ navigation, route }: DamageDetailsScreenProps) => {
       
       ctx.beginPath();
       ctx.strokeStyle = currentTool === 'pen' ? '#000000' : '#FFFFFF';
-      ctx.lineWidth = 3;
+      ctx.lineWidth = currentTool === 'pen' ? 5 : 30;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       
